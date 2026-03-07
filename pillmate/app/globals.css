@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/* CRITICAL: This tells Tailwind v4 to read your custom colors from the config file */
+@config "../tailwind.config.ts";
+
+@layer base {
+  :root {
+    /* PillMate theme — shadcn-compatible CSS variables */
+    --background: 40 33% 98%; /* paper: #FDFCF8 */
+    --foreground: 25 10% 15%; /* dark stone */
+    --card: 40 33% 98%;
+    --card-foreground: 25 10% 15%;
+    --popover: 40 33% 98%;
+    --popover-foreground: 25 10% 15%;
+    --primary: 150 20% 35%; /* sage: #4A6C58 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 20 35% 62%; /* clay: #C88D73 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 40 20% 92%;
+    --muted-foreground: 25 10% 45%;
+    --accent: 150 18% 82%;
+    --accent-foreground: 150 20% 25%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 15% 88%;
+    --input: 40 15% 88%;
+    --ring: 150 20% 35%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border outline-ring;
+  }
+  html {
+    /* Sets default font to Jakarta */
+    font-family: var(--font-plus-jakarta-sans);
+    background-color: var(--color-paper);
+    color: hsl(var(--foreground));
+  }
+  body {
+    @apply bg-paper text-stone-900 antialiased;
+  }
+}
