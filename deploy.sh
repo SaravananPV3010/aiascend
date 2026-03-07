@@ -68,12 +68,12 @@ echo "[ 5/7 ] Installing dependencies and building apps..."
 
 # PillMate app
 cd "$REPO_DIR/pillmate"
-npm ci
+npm install
 npm run build
 
 # Landing page
 cd "$REPO_DIR/landing_page"
-npm ci
+npm install
 npm run build
 
 # ─── 6. Nginx ─────────────────────────────────────────────────────────────────
