@@ -29,30 +29,66 @@ export interface LogEntry {
   };
 }
 
-export function addLogEntry(type: LogEventType, details: LogEntry['details'] = {}): void {
-  if (typeof window === 'undefined') return;
-  const existing = getLogEntries();
-  const entry: LogEntry = {
+function getToken() {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('token');
+}
+
+export async function addLogEntry(type: LogEventType, details: LogEntry['details'] = {}): Promise<void> {
+  const token = getToken();
+  if (!token) return;
+  
+  const entry = {
     id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
     type,
     timestamp: new Date().toISOString(),
     details,
   };
-  const updated = [entry, ...existing].slice(0, 200);
-  localStorage.setItem(LOG_KEY, JSON.stringify(updated));
+  
+  try {
+    await fetch('/api/vault', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(entry)
+    });
+  } catch (error) {
+    console.error('Failed to add log entry', error);
+  }
 }
 
-export function getLogEntries(): LogEntry[] {
-  if (typeof window === 'undefined') return [];
+export async function getLogEntries(): Promise<LogEntry[]> {
+  const token = getToken();
+  if (!token) return [];
+  
   try {
-    const raw = localStorage.getItem(LOG_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch {
+    const res = await fetch('/api/vault', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch (error) {
+    console.error('Failed to fetch logs', error);
     return [];
   }
 }
 
-export function clearLogEntries(): void {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem(LOG_KEY);
+export async function clearLogEntries(): Promise<void> {
+  const token = getToken();
+  if (!token) return;
+  
+  try {
+    await fetch('/api/vault', {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+  } catch (error) {
+    console.error('Failed to clear logs', error);
+  }
 }

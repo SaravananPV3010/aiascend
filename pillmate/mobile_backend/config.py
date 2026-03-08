@@ -14,7 +14,7 @@ class Settings:
     APP_VERSION: str = "1.0.0"
     DEBUG: bool = os.getenv("DEBUG", "false").lower() == "true"
     ALLOWED_ORIGINS: list[str] = os.getenv(
-        "ALLOWED_ORIGINS", "http://localhost:3000,http://localhost:8080"
+        "ALLOWED_ORIGINS", "http://localhost:3001,http://localhost:3000,http://localhost:8080"
     ).split(",")
 
     # ── JWT ────────────────────────────────────────────────────────────────────

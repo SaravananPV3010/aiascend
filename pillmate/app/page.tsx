@@ -43,7 +43,7 @@ const HomePage = () => {
             <div className="md:col-span-5">
               <div className="rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <img
-                  src="https://images.unsplash.com/photo-1590905775253-a4f0f3c426ff?crop=entropy&cs=srgb&fm=jpg&q=85"
+                  src="/images/elderly-woman.jpg"
                   alt="Confident elderly woman"
                   className="w-full h-auto"
                 />
@@ -108,7 +108,7 @@ const HomePage = () => {
             <div className="md:col-span-5">
               <div className="rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
                 <img
-                  src="https://images.unsplash.com/photo-1563213126-a4273aed2016?crop=entropy&cs=srgb&fm=jpg&q=85"
+                  src="/images/organizing-medication.jpg"
                   alt="Organizing medication"
                   className="w-full h-auto"
                 />

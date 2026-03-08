@@ -24,7 +24,13 @@ const UploadPage = () => {
 
   const processFile = (file: File) => {
     if (!file.type.startsWith('image/')) {
-      console.error('Please select an image file');
+      setError('Please select an image file.');
+      return;
+    }
+    // MED-4: Client-side size guard (server also enforces this)
+    const MAX_MB = 10;
+    if (file.size > MAX_MB * 1024 * 1024) {
+      setError(`Image must be under ${MAX_MB} MB. Please choose a smaller file.`);
       return;
     }
     setSelectedFile(file);

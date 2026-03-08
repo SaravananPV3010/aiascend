@@ -110,7 +110,7 @@ pillmate/
    ```bash
    npm run dev
    ```
-   Open `http://localhost:3000` to view the application.
+   Open `http://localhost:3001` to view the application.
 
 ---
 

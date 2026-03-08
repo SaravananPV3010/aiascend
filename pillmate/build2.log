@@ -1,0 +1,85 @@
+﻿
+> pillmate-v3@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+  Creating an optimized production build ...
+Ô£ô Compiled successfully in 5.5s
+  Running TypeScript ...
+npm : Failed to compile.
+At line:1 char:1
++ npm run build > build.log 2>&1
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : N 
+   otSpecified: (Failed to com  
+  pile.:String) [], RemoteExc   
+ eption
+    + FullyQualifiedErrorId : N 
+   ativeCommandError
+ 
+
+.next/dev/types/validator.ts:135
+:31
+Type error: Type 'typeof import(
+"C:/proj/aiascend/pillmate/app/a
+pi/vault/[id]/route")' does not 
+satisfy the constraint 'RouteHan
+dlerConfig<"/api/vault/[id]">'.
+  Types of property 'GET' are 
+incompatible.
+    Type '(req: Request, { 
+params }: { params: { id: 
+string; }; }) => 
+Promise<NextResponse<{ id: any; 
+type: any; timestamp: any; 
+details: any; }> | 
+NextResponse<{ error: any; }>>' 
+is not assignable to type 
+'(request: NextRequest, 
+context: { params: Promise<{ 
+id: string; }>; }) => void | 
+Response | Promise<void | 
+Response>'.
+      Types of parameters '__1' 
+and 'context' are incompatible.
+        Type '{ params: 
+Promise<{ id: string; }>; }' is 
+not assignable to type '{ 
+params: { id: string; }; }'.
+          Types of property 
+'params' are incompatible.
+            Property 'id' is 
+missing in type 'Promise<{ id: 
+string; }>' but required in 
+type '{ id: string; }'.
+
+[0m [90m 133 |[39m   type __I
+sExpected[33m<[39m[33mSpecifi
+c[39m [36mextends[39m [33mRo
+uteHandlerConfig[39m[33m<[39m
+[32m"/api/vault/[id]"[39m[33m
+>>[39m [33m=[39m 
+[33mSpecific[39m
+ [90m 134 |[39m   
+[36mconst[39m handler 
+[33m=[39m {} [36mas[39m 
+[36mtypeof[39m [36mimport[39
+m([32m"../../../app/api/vault/[
+id]/route.js"[39m)
+[31m[1m>[22m[39m[90m 135 
+|[39m   type __Check 
+[33m=[39m __IsExpected[33m<[
+39m[36mtypeof[39m 
+handler[33m>[39m
+ [90m     |[39m               
+                
+[31m[1m^[22m[39m
+ [90m 136 |[39m   [90m// 
+@ts-ignore[39m
+ [90m 137 |[39m   type 
+__Unused [33m=[39m __Check
+ [90m 138 |[39m }[0m
+Next.js build worker exited 
+with code: 1 and signal: null

@@ -1,15 +1,29 @@
 import { NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { getUserFromToken } from "../lib/auth";
+
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024; // 10 MB decoded
 
 export async function POST(req: Request) {
   try {
+    // CRIT-1: Require authenticated user
+    const user = getUserFromToken(req);
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
     const { imageBase64 } = await req.json();
 
-    if (!imageBase64) {
+    if (!imageBase64 || typeof imageBase64 !== 'string') {
       return NextResponse.json(
         { error: "Missing imageBase64 in request body" },
         { status: 400 }
       );
+    }
+
+    // MED-4 (server-side): Reject oversized payloads (~7.5 MB image -> ~10 MB base64)
+    if (Buffer.byteLength(imageBase64, 'base64') > MAX_IMAGE_BYTES) {
+      return NextResponse.json({ error: 'Image too large. Maximum size is 10 MB.' }, { status: 413 });
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -64,7 +78,9 @@ Rules:
     ]);
 
     const responseText = result.response.text().trim();
-    console.log("Gemini raw response:", responseText.substring(0, 500));
+    if (process.env.NODE_ENV === 'development') {
+      console.log("Gemini raw response:", responseText.substring(0, 500));
+    }
 
     // Strip markdown fences if model adds them anyway
     const cleaned = responseText
@@ -86,11 +102,10 @@ Rules:
 
     return NextResponse.json(analysis);
 
-  } catch (err: any) {
-    const detail = err instanceof Error ? err.message : String(err);
-    console.error("Analyze route error:", detail);
+  } catch (err: unknown) {
+    console.error("Analyze route error:", err);
     return NextResponse.json(
-      { error: detail },
+      { error: 'Failed to analyze prescription. Please try again.' },
       { status: 500 }
     );
   }
